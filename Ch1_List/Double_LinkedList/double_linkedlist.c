@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "dl.h"
+#include "double_linkedlist.h"
 
 // 새로운 노드를 동적할당 받고 반환하는 함수
 Node* makeNode(ElementType data) {
