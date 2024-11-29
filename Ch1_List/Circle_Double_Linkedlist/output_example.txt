@@ -1,0 +1,70 @@
+Current node count in list --- 5
+List[0]: 10
+List[1]: 20
+List[2]: 30
+List[3]: 40
+List[4]: 50
+
+
+Current node count in list --- 7
+List[0]: -456
+List[1]: -123
+List[2]: 10
+List[3]: 20
+List[4]: 30
+List[5]: 40
+List[6]: 50
+
+
+Inserting 3000 After [2]
+
+Current node count in list --- 8
+List[0]: -456
+List[1]: -123
+List[2]: 10
+List[3]: 3000
+List[4]: 20
+List[5]: 30
+List[6]: 40
+List[7]: 50
+
+
+Inserting 5000 before [2]
+
+Current node count in list --- 9
+List[0]: -456
+List[1]: -123
+List[2]: 5000
+List[3]: 10
+List[4]: 3000
+List[5]: 20
+List[6]: 30
+List[7]: 40
+List[8]: 50
+
+
+Removing 3000, and [1]
+
+Current node count in list --- 8
+List[0]: -456
+List[1]: -123
+List[2]: 5000
+List[3]: 10
+List[4]: 20
+List[5]: 30
+List[6]: 40
+List[7]: 50
+
+
+Current node count in list --- 7
+List[0]: -456
+List[1]: 5000
+List[2]: 10
+List[3]: 20
+List[4]: 30
+List[5]: 40
+List[6]: 50
+
+
+Destroying list...
+Destroy completed
