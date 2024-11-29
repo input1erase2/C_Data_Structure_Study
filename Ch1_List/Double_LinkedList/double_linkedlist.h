@@ -4,9 +4,9 @@
 typedef int ElementType;
 
 typedef struct _Node {
-    ElementType data;
-    struct _Node* prev;
-    struct _Node* next;
+	ElementType data;
+	struct _Node* prev;
+	struct _Node* next;
 } Node;
 
 Node*   makeNode(ElementType data);

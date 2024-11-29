@@ -1,0 +1,42 @@
+List[0] >> Prev: NULL   Curr:   10      Next:   20
+List[1] >> Prev:   10   Curr:   20      Next:   30
+List[2] >> Prev:   20   Curr:   30      Next:   40
+List[3] >> Prev:   30   Curr:   40      Next:   50
+List[4] >> Prev:   40   Curr:   50      Next: NULL
+
+
+Inserting 3000 After [2]
+
+List[0] >> Prev: NULL   Curr:   10      Next:   20
+List[1] >> Prev:   10   Curr:   20      Next:   30
+List[2] >> Prev:   20   Curr:   30      Next: 3000
+List[3] >> Prev:   30   Curr: 3000      Next:   40
+List[4] >> Prev: 3000   Curr:   40      Next:   50
+List[5] >> Prev:   40   Curr:   50      Next: NULL
+
+
+Removing 3000, and [1]
+
+List[0] >> Prev: NULL   Curr:   10      Next:   20
+List[1] >> Prev:   10   Curr:   20      Next:   30
+List[2] >> Prev:   20   Curr:   30      Next:   40
+List[3] >> Prev:   30   Curr:   40      Next:   50
+List[4] >> Prev:   40   Curr:   50      Next: NULL
+
+
+List[0] >> Prev: NULL   Curr:   10      Next:   30
+List[1] >> Prev:   10   Curr:   30      Next:   40
+List[2] >> Prev:   30   Curr:   40      Next:   50
+List[3] >> Prev:   40   Curr:   50      Next: NULL
+
+
+Destroying list...
+        Destroying... [10]
+        Destroying... [30]
+        Destroying... [40]
+        Destroying... [50]
+Destroy completed
+
+
+--------------------------------
+Process exited after 0.08389 seconds with return value 0 (31.25 ms cpu time, 3376 KB mem used)
