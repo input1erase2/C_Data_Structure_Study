@@ -2,10 +2,12 @@
 #include "single_linkedlist.h"
 
 void printList(Node* head) {
-    // Test 'getNode' and 'getNodeCount'
     Node* cur = NULL;
+    
+    // Test 'getNode' and 'getNodeCount'
     int size = getNodeCount(head);
     printf("Current node count in list --- %d\n", size);
+    
     for (int i = 0; i < size; ++i) {
         cur = getNode(head, i);
         printf("List[%d]: %d\n", i, cur->data);
