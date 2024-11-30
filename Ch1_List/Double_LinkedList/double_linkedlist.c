@@ -24,7 +24,7 @@ void destroyList(Node** head) {
 		cur = cur->next;
 		printf("\tDestroying... [%d]\n", (*head)->data);
 		free((*head));		// 메모리 해제
-		(*head) = cur;		// 마지막 루프에서 NULL 포인터 초기화까지 된다.
+		(*head) = cur;		// 마지막 루프에서 NULL 포인터 초기화까지.
 	}
 }
 
@@ -42,6 +42,11 @@ void addNode(Node** head, Node* newNode) {
 
 // cur 노드 뒤에 newNode를 삽입하는 함수
 void addNodeAfter(Node* cur, Node* newNode) {
+	if (cur == newNode) {
+		printf("[addNodeAfter()/ ERR] 1st argument is equal with 2nd argument\n");
+		printf("This is not a circular linkedlist. operation cannot be done\n");
+		return;
+	}
 	newNode->prev = cur;
 	newNode->next = cur->next;
 	if (cur->next != NULL) {
@@ -54,7 +59,6 @@ void addNodeAfter(Node* cur, Node* newNode) {
 void removeNode(Node** head, Node* delNode) {
 	// Case 1. delNode가 head인 경우
 	if ((*head) == delNode) {
-		// head를 다음 칸으로 옮겨준 뒤 delNode를 제거한다.
 		(*head) = (*head)->next;
 		if ((*head) != NULL) (*head)->prev = NULL;
 	} 
