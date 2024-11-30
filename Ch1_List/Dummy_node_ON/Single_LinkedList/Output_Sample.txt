@@ -1,0 +1,39 @@
+[Test] Add nodes ========
+Current total node count = 7
+List[0] >>   70 --- (  60)
+List[1] >>   60 --- (  50)
+List[2] >>   50 --- (  40)
+List[3] >>   40 --- (  30)
+List[4] >>   30 --- (  20)
+List[5] >>   20 --- (  10)
+List[6] >>   10 --- (NULL)
+
+
+[Test] Remove data '20' ========
+Current total node count = 6
+List[0] >>   70 --- (  60)
+List[1] >>   60 --- (  50)
+List[2] >>   50 --- (  40)
+List[3] >>   40 --- (  30)
+List[4] >>   30 --- (  10)
+List[5] >>   10 --- (NULL)
+
+
+[Test] Remove data '30' ========
+Current total node count = 5
+List[0] >>   70 --- (  60)
+List[1] >>   60 --- (  50)
+List[2] >>   50 --- (  40)
+List[3] >>   40 --- (  10)
+List[4] >>   10 --- (NULL)
+
+
+[Test] Remove tail node ========
+Current total node count = 4
+List[0] >>   70 --- (  60)
+List[1] >>   60 --- (  50)
+List[2] >>   50 --- (  40)
+List[3] >>   40 --- (NULL)
+
+
+[List removal Complete]
