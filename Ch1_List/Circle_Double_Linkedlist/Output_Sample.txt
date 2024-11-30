@@ -1,0 +1,64 @@
+List[0] >> Prev:   70   Curr:   10      Next:   20
+List[1] >> Prev:   10   Curr:   20      Next:   30
+List[2] >> Prev:   20   Curr:   30      Next:   40
+List[3] >> Prev:   30   Curr:   40      Next:   50
+List[4] >> Prev:   40   Curr:   50      Next:   60
+List[5] >> Prev:   50   Curr:   60      Next:   70
+List[6] >> Prev:   60   Curr:   70      Next:   10
+
+
+[Adding 3000 after [4], Check if [5] is 3000]
+
+List[0] >> Prev:   70   Curr:   10      Next:   20
+List[1] >> Prev:   10   Curr:   20      Next:   30
+List[2] >> Prev:   20   Curr:   30      Next:   40
+List[3] >> Prev:   30   Curr:   40      Next:   50
+List[4] >> Prev:   40   Curr:   50      Next: 3000
+List[5] >> Prev:   50   Curr: 3000      Next:   60
+List[6] >> Prev: 3000   Curr:   60      Next:   70
+List[7] >> Prev:   60   Curr:   70      Next:   10
+
+
+[Removing head, Check if head is changed]
+
+List[0] >> Prev:   70   Curr:   20      Next:   30
+List[1] >> Prev:   20   Curr:   30      Next:   40
+List[2] >> Prev:   30   Curr:   40      Next:   50
+List[3] >> Prev:   40   Curr:   50      Next: 3000
+List[4] >> Prev:   50   Curr: 3000      Next:   60
+List[5] >> Prev: 3000   Curr:   60      Next:   70
+List[6] >> Prev:   60   Curr:   70      Next:   20
+
+
+[Removing [4] in list]
+
+List[0] >> Prev:   70   Curr:   20      Next:   30
+List[1] >> Prev:   20   Curr:   30      Next:   40
+List[2] >> Prev:   30   Curr:   40      Next:   50
+List[3] >> Prev:   40   Curr:   50      Next:   60
+List[4] >> Prev:   50   Curr:   60      Next:   70
+List[5] >> Prev:   60   Curr:   70      Next:   20
+
+
+[Removing 3000 in list]
+
+[ERROR] There is no such data in list!
+List[0] >> Prev:   70   Curr:   20      Next:   30
+List[1] >> Prev:   20   Curr:   30      Next:   40
+List[2] >> Prev:   30   Curr:   40      Next:   50
+List[3] >> Prev:   40   Curr:   50      Next:   60
+List[4] >> Prev:   50   Curr:   60      Next:   70
+List[5] >> Prev:   60   Curr:   70      Next:   20
+
+
+[Destroying list]
+
+        Destroying... [20]
+        Destroying... [30]
+        Destroying... [40]
+        Destroying... [50]
+        Destroying... [60]
+        Destroying... [70]
+
+(*head) was 0x000001FF716437D0 -> now NULL
+This is main(), list is NULL. End program...

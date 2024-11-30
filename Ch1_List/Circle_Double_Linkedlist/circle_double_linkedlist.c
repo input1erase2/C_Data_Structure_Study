@@ -1,14 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "double_linkedlist.h"
+#include "circle_double_linkedlist.h"
 
 // 새로운 노드를 동적할당 받고 반환하는 함수
 Node* makeNode(ElementType data) {
 	Node* newNode = (Node*)malloc(sizeof(Node));
 	newNode->data = data;
 	newNode->next = NULL;
-	newNode->prev = NULL;       // Double linkedlist
-	
+	newNode->prev = NULL;
 	return newNode;
 }
 
@@ -20,88 +19,83 @@ void destroyNode(Node* node) {
 // Head부터 순회하며 동적 메모리를 반환하고 연결리스트를 파괴하는 함수
 void destroyList(Node** head) {
 	Node* cur = (*head);
-	while (cur) {
+	Node* delNode = NULL;
+	while (cur->next != (*head)) {
+		delNode = cur;
 		cur = cur->next;
-		printf("\tDestroying... [%d]\n", (*head)->data);
-		free((*head));		// 메모리 해제
-		(*head) = cur;		// 마지막 루프에서 NULL 포인터 초기화까지.
+		printf("\tDestroying... [%d]\n", delNode->data);
+		free(delNode);	// 메모리 해제
 	}
+	printf("\tDestroying... [%d]\n", cur->data);
+	free(cur);			// tail 노드 처리
+	printf("\n(*head) was 0x%p -> now NULL\n", (*head));
+	(*head) = NULL;		// 댕글링 포인터 처리
 }
 
 // Tail 노드에 newNode를 삽입하는 함수
 void addNode(Node** head, Node* newNode) {
-	if ((*head) == NULL) (*head) = newNode;
-	else {
-		Node* cur = (*head);
-		while (cur->next) cur = cur->next;
-		
-		cur->next = newNode;
-		newNode->prev = cur;    // Double linkedlist
+	if ((*head) == NULL) {
+		(*head) = newNode;
+		(*head)->prev = (*head);
+		(*head)->next = (*head);
 	}
+	else addNodeAfter((*head)->prev, newNode);
+}
+
+// Tail 노드에 새로운 노드를 생성해서 삽입하는 함수
+void addNodeByData(Node** head, ElementType newData) {
+	Node* newNode = makeNode(newData);
+	addNode(head, newNode);
 }
 
 // cur 노드 뒤에 newNode를 삽입하는 함수
 void addNodeAfter(Node* cur, Node* newNode) {
-	if (cur == newNode) {
-		printf("[addNodeAfter()/ ERR] 1st argument is equal with 2nd argument! operation cannot be done.\n");
-		return;
-	}
 	newNode->prev = cur;
 	newNode->next = cur->next;
-	if (cur->next != NULL) {
-		cur->next->prev = newNode;
-		cur->next = newNode;
-	}
+	cur->next->prev = newNode;
+	cur->next = newNode;
 }
 
 // 연결리스트에서 delNode를 제거하는 함수
 void removeNode(Node** head, Node* delNode) {
-	// Case 1. delNode가 head인 경우
-	if ((*head) == delNode) {
-		(*head) = (*head)->next;
-		if ((*head) != NULL) (*head)->prev = NULL;
-	} 
-	// Case 2. delNode가 head가 아닌 경우
-	else {
-		// 화살표 2개를 순서대로 제거한다.
-		Node* temp = delNode;
-		if (delNode->prev) delNode->prev->next = temp->next;
-		if (delNode->next) delNode->next->prev = temp->prev;
-		// 이제 안 쓰는 노드는 지워준다.
-		delNode->prev = NULL;
-		delNode->next = NULL;
-		free(delNode);
-	}
+	if ((*head) == delNode) (*head) = (*head)->next;
+	delNode->next->prev = delNode->prev;
+	delNode->prev->next = delNode->next;
+	free(delNode);
 }
 
 // 연결리스트에서 'delData'에 해당하는 요소를 찾아 제거하는 함수
 void removeNodeByData(Node** head, ElementType delData) {
+	Node* delNode = NULL;
 	if ((*head)->data == delData) {
-		(*head) = (*head)->next;
-		if ((*head) != NULL) (*head)->prev = NULL;
+		delNode = (*head);
+		delNode->prev->next = delNode->next;
+		delNode->next->prev = delNode->prev;
+		(*head) = delNode->next;
 	}
 	else {
-		Node* cur = (*head);
-		while (cur && cur->next->data != delData) cur = cur->next;
+		delNode = (*head)->next;
+		while (delNode != (*head) && delNode->data != delData)
+			delNode = delNode->next;
 		
 		// At the end of list, there is no 'delData' in the list.
-		if (cur->next->data != delData || cur == NULL) {
+		if (delNode->data != delData || delNode == (*head)) {
 			printf("[ERROR] There is no such data in list!\n");
 			return;
 		}
 		// 화살표 2개를 순서대로 제거한다.
-		Node* delNode = cur->next;
-		if (delNode->next) delNode->next->prev = cur;
-		cur->next = delNode->next;
-		// 이제 안 쓰는 노드는 지워준다.
-		delNode->prev = NULL;
-		delNode->next = NULL;
-		free(delNode);
+		delNode->next->prev = delNode->prev;
+		delNode->prev->next = delNode->next;
 	}
+	free(delNode);
 }
 
 // 연결리스트에서 'loc + 1'번째 요소를 찾아 반환하는 함수
 Node* getNode(Node* head, int loc) {
+	// loc이 전체 연결리스트 크기보다 큰 경우, loc을 줄인다
+	int sz = getNodeCount(head);
+	if (loc > sz) loc %= sz;
+	
 	Node* cur = head;
 	while (cur && (--loc >= 0)) cur = cur->next;
 	return cur;
@@ -114,6 +108,7 @@ unsigned int getNodeCount(Node* head) {
 	while (cur) {
 		cur = cur->next;
 		ret++;
+		if (cur == head) break;
 	}
 	return ret;
 }
