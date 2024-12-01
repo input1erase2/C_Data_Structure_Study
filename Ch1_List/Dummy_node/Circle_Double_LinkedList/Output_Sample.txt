@@ -1,0 +1,52 @@
+[Test] Add nodes ========
+Current total node count = 5
+List[0] >>   50 --- (  40)
+List[1] >>   40 --- (  30)
+List[2] >>   30 --- (  20)
+List[3] >>   20 --- (  10)
+List[4] >>   10 --- (Dummy Tail Node)
+
+
+Current total node count = 7
+List[0] >>   50 --- (  40)
+List[1] >>   40 --- (  30)
+List[2] >>   30 --- (  20)
+List[3] >>   20 --- (  10)
+List[4] >>   10 --- (  60)
+List[5] >>   60 --- (  70)
+List[6] >>   70 --- (Dummy Tail Node)
+
+
+[Test] Remove data '20' ========
+Current total node count = 6
+List[0] >>   50 --- (  40)
+List[1] >>   40 --- (  30)
+List[2] >>   30 --- (  10)
+List[3] >>   10 --- (  60)
+List[4] >>   60 --- (  70)
+List[5] >>   70 --- (Dummy Tail Node)
+
+
+[Test] Remove data '30' ========
+Current total node count = 5
+List[0] >>   50 --- (  40)
+List[1] >>   40 --- (  10)
+List[2] >>   10 --- (  60)
+List[3] >>   60 --- (  70)
+List[4] >>   70 --- (Dummy Tail Node)
+
+
+[Test] Remove tail node ========
+Current total node count = 4
+List[0] >>   50 --- (  40)
+List[1] >>   40 --- (  60)
+List[2] >>   60 --- (  70)
+List[3] >>   70 --- (Dummy Tail Node)
+
+[Destroying list] ========
+        Destroying [50]...
+        Destroying [40]...
+        Destroying [60]...
+        Destroying [70]...
+        Destroying [Dummy Tail Node]...
+[List removal Complete]

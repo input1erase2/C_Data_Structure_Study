@@ -12,7 +12,6 @@ typedef struct _Node {
 } Node;
 
 typedef struct _List {
-    Node* head;     // dummy
     Node* tail;     // dummy
     Node* cur;
     int numOfData;
@@ -22,9 +21,11 @@ typedef DoubleLinkedList List;
 
 
 void        makeList(List* list);
-void        addNode(List* list, ElementType newData);
 
-int         removeList(List* list);
+void        addNodeFront(List* list, ElementType newData);
+void        addNodeBack(List* list, ElementType newData);
+
+void        removeList(List* list);
 void        removeNode(List* list, ElementType delData);
 ElementType removeCur(List* list);
 
