@@ -1,0 +1,12 @@
+Peek --- 1100   Popped --- 1100
+Peek --- 1000   Popped --- 1000
+Peek --- 900    Popped --- 900
+Peek --- 800    Popped --- 800
+Peek --- 700    Popped --- 700
+Peek --- 600    Popped --- 600
+Peek --- 500    Popped --- 500
+Peek --- 400    Popped --- 400
+Peek --- 300    Popped --- 300
+Peek --- 200    Popped --- 200
+Peek --- 100    Popped --- 100
+[ERROR/ POP] Stack is already empty

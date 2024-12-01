@@ -1,0 +1,11 @@
+[ERROR/ PUSH] Stack is already full
+Popped --- 1000
+Popped --- 900
+Popped --- 800
+Popped --- 700
+Popped --- 600
+Popped --- 500
+Popped --- 400
+Popped --- 300
+Popped --- 200
+Popped --- 100
