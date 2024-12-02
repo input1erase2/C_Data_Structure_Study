@@ -8,9 +8,11 @@
 #define FALSE	0
 
 typedef int ElementType;
+
 typedef struct _Node {
 	ElementType data;
 } Node;
+
 typedef struct _Queue {
 	int capacity;
 	int front; 
@@ -18,12 +20,12 @@ typedef struct _Queue {
 	Node* nodes;
 } Queue;
 
-void Q_makeQueue(Queue* queue, int capacity);
-void Q_destroyQueue(Queue* queue);
-void Q_enqueue(Queue* queue, ElementType newData);
+void 		Q_makeQueue(Queue* queue, int capacity);
+void 		Q_destroyQueue(Queue* queue);
+void 		Q_enqueue(Queue* queue, ElementType newData);
 ElementType Q_dequeue(Queue* queue);
-int Q_getSize(const Queue* queue);
-int Q_isEmpty(const Queue* queue);
-int Q_isFull(const Queue* queue);
+int 		Q_getSize(const Queue* queue);
+int 		Q_isEmpty(const Queue* queue);
+int 		Q_isFull(const Queue* queue);
 
 #endif
