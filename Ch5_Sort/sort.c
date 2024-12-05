@@ -127,7 +127,7 @@ void quickSort(int* arr, int s, int e) {
     int l = s + 1, r = e;
     while (l <= r) {
         while (l <= e && arr[p] >= arr[l]) l++;
-        while (r > s && arr[p] < arr[r]) r--;
+        while (r > s && arr[p] <= arr[r]) r--;   // no eqation, because of pivot
         if (l < r) mySwap(&arr[l], &arr[r]);
     }
     mySwap(&arr[p], &arr[r]);
