@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "bintree.h"
 #include "bst.h"
+#include "avl.h"
 
 void BST_init(Node** root) {
 	(*root) = NULL;
@@ -11,32 +12,53 @@ ElementType BST_getData(Node* node){
 	return BT_getData(node);
 }
 
-void BST_insert(Node** root, ElementType newData){
-	Node* parent = NULL;
-	Node* child = (*root);
-	Node* newNode = NULL;
+// void BST_insert(Node** root, ElementType newData){
+// 	Node* parent = NULL;
+// 	Node* child = (*root);
+// 	Node* newNode = NULL;
 	
-	ElementType tempData;
-	while (child) {
-		tempData = BT_getData(child);
-		if (newData == tempData) {
-			perror("[ERROR/ BST Insert] Key is already in the tree\n\n");
-			exit(-1);
-		}
-		parent = child;
-		child = (tempData > newData) ? BT_getLeftSubtree(child) : BT_getRightSubtree(child);
-	}
-	newNode = BT_makeNode();
-	BT_setData(newNode, newData);
+// 	ElementType tempData;
+// 	while (child) {
+// 		tempData = BT_getData(child);
+// 		if (newData == tempData) {
+// 			perror("[ERROR/ BST Insert] Key is already in the tree\n\n");
+// 			exit(-1);
+// 		}
+// 		parent = child;
+// 		child = (tempData > newData) ? BT_getLeftSubtree(child) : BT_getRightSubtree(child);
+// 	}
+// 	newNode = BT_makeNode();
+// 	BT_setData(newNode, newData);
 	
-	if (parent == NULL)		// if this newNode is the first node of the tree
-		(*root) = newNode;
+// 	if (parent == NULL)		// if this newNode is the first node of the tree
+// 		(*root) = newNode;
+// 	else {
+// 		if (newData < BT_getData(parent))
+// 			BT_setLeftSubtree(parent, newNode);
+// 		else
+// 			BT_setRightSubtree(parent, newNode);
+// 	}
+// 	// (*root) = BT_rebalance(root);
+// }
+
+// AVL 트리를 위한 BST 삽입함수, 재귀적으로 자리를 찾아가고, 리밸런싱한다.
+Node* BST_insert(Node** root, ElementType newData) {
+	if ((*root) == NULL) {
+		(*root) = BT_makeNode();
+		BT_setData(*root, newData);
+	}	// 첫 노드, 루트 노드가 돼야한다.
+	else if (newData < BT_getData(*root)) {
+		BST_insert(&((*root)->left), newData);
+		(*root) = BT_rebalance(root);
+	}	// 왼쪽 서브트리로 빠져야 하는경우, 재귀적으로 호출하며 리밸런싱
+	else if (newData > BT_getData(*root)) {
+		BST_insert(&((*root)->right), newData);
+		(*root) = BT_rebalance(root);
+	}	// 오른쪽 서브트리로 빠져야 하는경우, 재귀적으로 호출하며 리밸런싱
 	else {
-		if (newData < BT_getData(parent))
-			BT_setLeftSubtree(parent, newNode);
-		else
-			BT_setRightSubtree(parent, newNode);
-	}
+		return NULL;
+	}	// 키 중복이 발생한 경우
+	return (*root);
 }
 
 Node* BST_search(Node* root, ElementType target){
@@ -112,6 +134,7 @@ Node* BST_remove(Node** root, ElementType target){
 		(*root) = BT_getRightSubtree(vRoot);
 
 	free(vRoot);
+	(*root) = BT_rebalance(root);	// 노드 제거 후 리밸런싱
 	return delNode;
 }
 

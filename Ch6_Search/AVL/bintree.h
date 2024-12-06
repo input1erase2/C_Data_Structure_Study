@@ -16,7 +16,7 @@ Node* 			BT_makeNode(void);
 void			BT_deleteNode(Node* node);
 void			BT_deleteTree(Node* root);
 
-ElementType		BT_getData(Node* node);
+ElementType		BT_getData(const Node* node);
 void			BT_setData(Node* node, ElementType newData);
 
 Node* 			BT_getLeftSubtree(Node* node);
