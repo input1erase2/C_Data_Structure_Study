@@ -25,10 +25,10 @@ void    RBT_rotateRight(Node** tree, Node* center);
 
 void    RBT_insert(Node** tree, Node* newNode);
 void    RBT_insertHelper(Node** tree, Node* newNode);
-void    RBT_rebuildAfterInsert(Node** tree, Node* newNode);
+void    RBT_rebuildAfterInsert(Node** tree, Node* cur);
 
 Node*   RBT_remove(Node** tree, ElementType targetData);
-void    RBT_rebuildAfterRemove(Node** tree, Node* cur);
+void    RBT_rebuildAfterRemove(Node** tree, Node* successor);
 
 void    RBT_printTree(Node* tree, int depth, int blackCount);
 
