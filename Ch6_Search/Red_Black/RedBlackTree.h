@@ -20,16 +20,15 @@ Node*   RBT_search(Node* tree, ElementType targetData);
 Node*   RBT_searchMin(Node* tree);
 Node*   RBT_searchMax(Node* tree);
 
+void    RBT_rotateLeft(Node** tree, Node* center);
+void    RBT_rotateRight(Node** tree, Node* center);
+
 void    RBT_insert(Node** tree, Node* newNode);
 void    RBT_insertHelper(Node** tree, Node* newNode);
+void    RBT_rebuildAfterInsert(Node** tree, Node* newNode);
 
 Node*   RBT_remove(Node** tree, ElementType targetData);
-
-void    RBT_rebuildAfterInsert(Node** tree, Node* newNode);
 void    RBT_rebuildAfterRemove(Node** tree, Node* cur);
-
-void    RBT_rotateRight(Node** tree, Node* center);
-void    RBT_rotateLeft(Node** tree, Node* center);
 
 void    RBT_printTree(Node* tree, int depth, int blackCount);
 
