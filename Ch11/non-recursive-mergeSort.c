@@ -3,88 +3,127 @@
 #include <string.h>
 #include <time.h>
 
-#define CNT 100000
-#define MAX 1000000
+typedef unsigned long long ull;
 
+#define CNT 1000001
 
-// merge function, merge between a[s : m] and s[m+1 : e] 
-void _mergeSort_nonRecursive(int* a, int s, int m, int e) {
-    int lenL = m - s + 1;
-    int lenR = e - m;
-    
-    // Make Left side buffer and initialize
-    int bufL[lenL];
-    for (int i = 0; i < lenL; ++i) bufL[i] = a[s + i];
-    // Make Right side buffer and initialize
-    int bufR[lenR];
-    for (int i = 0; i < lenR; ++i) bufR[i] = a[m + 1 + i];
-    
-    int aPos = s, bPosL = 0, bPosR = 0;
-    
-    while (bPosL < lenL && bPosR < lenR)
-        a[aPos++] = (bufL[bPosL] < bufR[bPosR]) ? bufL[bPosL++] : bufR[bPosR++];
-    while (bPosL < lenL)
-        a[aPos++] = bufL[bPosL++];
-    while (bPosR < lenR)
-        a[aPos++] = bufR[bPosR++];
+// RAND_MAX 이상의 큰 수 범위의 랜덤(random) 값 구하기: https://swjman.tistory.com/26
+#define RANDOM(__min__, __max__) \
+	((int)(((double)((rand()<<15) | rand())) / ((RAND_MAX<<15 | RAND_MAX) + 1) \
+		* (((__max__) + 1) - (__min__))) + (__min__))
+
+void _recursiveHelper(int* a, int* b, int s, int e) {
+	if (s >= e) return;
+	
+	int m = s + ((e - s) >> 1);
+	
+	_recursiveHelper(a, b, s, m);
+	_recursiveHelper(a, b, m + 1, e);
+	
+	int aPosL = s, aPosR = s;
+	int bPosL = 0, bPosR = 0;
+	
+	while (aPosR <= m) b[bPosR++] = a[aPosR++];
+	while (bPosL < bPosR && aPosR <= e)
+		a[aPosL++] = (a[aPosR] < b[bPosL]) ? a[aPosR++] : b[bPosL++];
+	while (bPosL < bPosR) a[aPosL++] = b[bPosL++];
 }
 
-int getMin(int x, int y) { return (x < y) ? x : y; }
+void mergeSort_recursive(int* a, int len) {
+	int* b = (int*)malloc(sizeof(int) * len);
+	_recursiveHelper(a, b, 0, len - 1);
+	free(b);
+}
+
+
+void _nonRecursiveHelper(int* a, int s, int m, int e) {
+	int lenL = m - s + 1;		// 왼쪽 부분배열의 길이
+	int lenR = e - m;			// 오른쪽 부분배열의 길이
+		
+	int bufL[lenL], bufR[lenR]; // 부분배열 왼쪽/오른쪽 절반 저장할 버퍼 생성 및 초기화
+	
+	for (int i = 0; i < lenL; ++i) bufL[i] = a[s + i];
+	for (int i = 0; i < lenR; ++i) bufR[i] = a[m + 1 + i];
+	
+	int aPos = s, bPosL = 0, bPosR = 0;
+	// 왼쪽 버퍼와 오른쪽 버퍼를 서로 비교하면서 더 작은쪽을 원본에 저장
+	while (bPosL < lenL && bPosR < lenR)
+		a[aPos++] = (bufL[bPosL] <= bufR[bPosR]) ? bufL[bPosL++] : bufR[bPosR++];
+	while (bPosL < lenL)
+		a[aPos++] = bufL[bPosL++];
+	while (bPosR < lenR)
+		a[aPos++] = bufR[bPosR++];
+}
+
+int getMin(int a, int b) { return (a < b) ? a : b; }
 
 void mergeSort_nonRecursive(int* a, int len) {
-    for (int i = 1; i < len; i <<= 1) {
-        int offset = i << 1;
-        for (int j = 0; j < len - 1; j += offset) {
-            int leftEnd = getMin(j + i - 1, len - 1);
-            int rightEnd = getMin(j + offset - 1, len - 1);
-            _mergeSort_nonRecursive(a, j, leftEnd, rightEnd);
-        }
-    }
+	// Divide the array into blocks of size = [1, 2, 4, 8, 16…]
+	for (int size = 1; size < len; size *= 2) {
+		for (int leftStart = 0; leftStart < len - 1; leftStart += size * 2) {
+			int leftEnd = getMin(leftStart + size - 1, len - 1);
+			int rightEnd = getMin(leftStart + (2 * size) - 1, len - 1);
+			_nonRecursiveHelper(a, leftStart, leftEnd, rightEnd);
+		}
+	}
 }
 
-void _mergeSort_recursive(int* a, int* b, int s, int e) {
-    if (s >= e) return;
-    
-    int m = s + ((e - s) >> 1);     // s + (e - s) / 2
-    
-    _mergeSort_recursive(a, b, s, m);
-    _mergeSort_recursive(a, b, m + 1, e);
-    
-    int aPosL = s, aPosR = s;
-    int bPosL = 0, bPosR = 0;
-    
-    while (aPosR <= m) b[bPosR++] = a[aPosR++];
-    while (bPosL < bPosR && aPosR <= e)
-        a[aPosL++] = (a[aPosR] < b[bPosL]) ? b[bPosL++] : a[aPosR++];
-    while (bPosL < bPosR) a[aPosL++] = b[bPosL++];
-}
-
-int mergeSort_recursive (int* a, int len) {
-    int* b = (int*)calloc(len, sizeof(int));
-    _mergeSort_recursive(a, b, 0, len - 1);
-    free(b);
-}
-
-/* Function to print an array */
-void printArray(int A[], int size)
-{
-    int i;
-    for (i=0; i < size; i++)
-        printf("%d ", A[i]);
-    printf("\n");
-}
 
 int main() {
-    int arr[] = {12, 11, 13, 5, 6, 7, 3, 29, 23, 9, 18, 15};
-    int n = sizeof(arr)/sizeof(arr[0]);
- 
-    printf("Given array is \n");
-    printArray(arr, n);
- 
-    mergeSort_nonRecursive(arr, n);
- 
-    printf("\nSorted array is \n");
-    printArray(arr, n);
-    
-    return 0;
+	srand(time(NULL));
+	
+	int a[CNT];
+	for (int i = 0; i < CNT; ++i) a[i] = RANDOM(1, 20000000);
+	
+	printf("[Original] >> ");
+	for (int i = 0; i < 15; ++i) printf("%3d ", a[i]);
+	printf("\n");
+	
+	int b[CNT];
+	memcpy(b, a, sizeof(a));
+	
+	ull start = 0ul, end = 0ul;
+	
+	start = (ull)clock();
+	mergeSort_recursive(b, CNT);
+	end = (ull)clock();
+	
+	printf("[Recursive] >> ");
+	for (int i = 0; i < 15; ++i) printf("%3d ", b[i]);
+	printf("\n");
+	printf("Time cost = %lld\n\n", end - start);
+	
+	
+	int c[CNT];
+	memcpy(c, a, sizeof(a));
+	
+	start = (ull)clock();
+	mergeSort_nonRecursive(c, CNT);
+	end = (ull)clock();
+	
+	printf("[Non-Recursive] >> ");
+	for (int i = 0; i < 15; ++i) printf("%3d ", c[i]);
+	printf("\n");
+	printf("Time cost = %lld\n\n", end - start);
+	
+	return 0;
 }
+
+/*
+[Recursive] >>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+Time cost = 66
+(93.75 ms cpu time, 13584 KB mem used)
+
+[Non-Recursive] >>   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+Time cost = 73
+(109.4 ms cpu time, 13580 KB mem used)
+
+
+[읽어보면 좋은 주제]: Merge sort Implementation - Recursive vs Iterative
+Link: https://stackoverflow.com/q/66695718
+
+Most libraries use a variation of insertion sort and bottom up merge sort for a stable sort (i.e. C++ std::stable_sort()).
+I've benchmarked naive top down(Recursive) and bottom up(Iterative) merge sort on my system,
+and bottom up is slightly faster. Any advantage to cached data is offset by stack operations, versus global optimizations which tend to keep pointers and indexes in registers.
+
+*/
